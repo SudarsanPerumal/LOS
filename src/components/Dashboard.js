@@ -61,7 +61,7 @@ function Dashboard({ selectedLoan, userType }) {
     },
     {
       ein: "45-6789012",
-      error: "No loans were found for this EIN"
+      error: "No loans were found for this Borrower"
     }
   ];
 
@@ -97,7 +97,7 @@ function Dashboard({ selectedLoan, userType }) {
       status: "pending"
     },
     {
-      phase: "Verify EIN",
+      phase: "Loan Stacking",
       icon: <BadgeIcon sx={{ fontSize: 28 }} />,
       status: "verified",
       action: () => setVerifyEINModal(true)
@@ -131,7 +131,7 @@ function Dashboard({ selectedLoan, userType }) {
       setResponseModal(true);
       message.success('EIN verification submitted successfully');
     } else {
-      setErrorMessage('No loans were found for this EIN');
+      setErrorMessage('No loans were found for this Borrower');
       setErrorModal(true);
     }
     
@@ -194,7 +194,7 @@ function Dashboard({ selectedLoan, userType }) {
       </Row>
 
       <Modal
-        title="Verify EIN"
+        title="Loan Stacking"
         open={verifyEINModal}
         onCancel={() => setVerifyEINModal(false)}
         footer={null}
@@ -268,7 +268,7 @@ function Dashboard({ selectedLoan, userType }) {
         ]}
       >
         <Typography.Text>
-          Are you sure, you want to move the records to Intain-Markets?
+          Are you sure, you want to move the records to Digital Loan Ledger?
         </Typography.Text>
       </Modal>
 
@@ -300,7 +300,7 @@ function Dashboard({ selectedLoan, userType }) {
         <Space direction="vertical" align="center" style={{ width: '100%' }}>
           <CheckCircleIcon style={{ color: '#52c41a', fontSize: 60 }} />
           <Typography.Text strong>
-            Records are successfully moved to Intain-Markets
+            Records are successfully moved to Digital Loan Ledger
           </Typography.Text>
         </Space>
       </Modal>
