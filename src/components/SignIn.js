@@ -15,6 +15,7 @@ import logo from "../assets/image/credibly.svg"
 function SignIn({ onLogin }) {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
+  const [form] = Form.useForm();
 
   const handleSubmit = async (values) => {
     setLoading(true);
@@ -23,10 +24,20 @@ function SignIn({ onLogin }) {
         message.success('Login successful!');
         navigate('/dashboard');
       } else {
-        message.error('Invalid credentials');
+        form.setFields([
+          {
+            name: 'password',
+            errors: ['Invalid username or password'],
+          },
+        ]);
       }
     } catch (error) {
-      message.error('An error occurred');
+      form.setFields([
+        {
+          name: 'password',
+          errors: ['An error occurred'],
+        },
+      ]);
     } finally {
       setLoading(false);
     }
@@ -61,6 +72,7 @@ function SignIn({ onLogin }) {
           Loan Origination System
         </Typography.Title> */}
         <Form
+          form={form}
           name="login"
           onFinish={handleSubmit}
           layout="vertical"

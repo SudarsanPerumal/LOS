@@ -1,6 +1,6 @@
 import './App.css';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import { SnackbarProvider } from 'notistack';
+import { SnackbarProvider, useSnackbar } from 'notistack';
 import SignIn from './components/SignIn';
 import Dashboard from './components/Dashboard';
 import Dashboard1 from './components/Dashboard1';
@@ -11,6 +11,7 @@ function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [selectedLoan, setSelectedLoan] = useState(null);
   const [userType, setUserType] = useState(null);
+  const { enqueueSnackbar } = useSnackbar();
 
   const handleLogin = (credentials) => {
     if (credentials.username === "credibly" && credentials.password === "intain123") {
@@ -22,6 +23,7 @@ function App() {
       setUserType('uwon');
       return true;
     }
+    enqueueSnackbar('Invalid username or password', { variant: 'error' });
     return false;
   };
 
