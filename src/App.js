@@ -15,6 +15,7 @@ function App() {
 
   const handleLogin = (credentials) => {
     if (credentials.username === "credibly" && credentials.password === "intain123") {
+      sessionStorage.setItem('originatorName', credentials.username);
       setIsAuthenticated(true);
       setUserType('credibly');
       return true;

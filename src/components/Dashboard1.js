@@ -41,7 +41,10 @@ function Dashboard1({ setSelectedLoan, userType }) {
     assetClass: loan['Asset Class'],
     originalBalance: loan['Original Principal Balance'],
     interestRate: (parseFloat(loan['Current Interest Rate']) * 100).toFixed(2) + '%',
-    status: loan['Loan Status']
+
+    // interestRate: loan['Current Interest Rate'] + '%',
+    status: loan['Loan Status'],
+    ein : loan["EIN"]
   }));
 
   const getStatusColor = (status) => {
@@ -71,7 +74,7 @@ function Dashboard1({ setSelectedLoan, userType }) {
       key: 'originalBalance',
       render: (text) => (
         <Space>
-          ${text}
+          ${text.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
         </Space>
       )
     },
@@ -84,11 +87,11 @@ function Dashboard1({ setSelectedLoan, userType }) {
       title: 'Status',
       dataIndex: 'status',
       key: 'status',
-      render: (status) => (
-        <Tag color={getStatusColor(status)}>
-          {status}
-        </Tag>
-      )
+      // render: (status) => (
+      //   <Tag color={getStatusColor(status)}>
+      //     {status}
+      //   </Tag>
+      // )
     },
     {
       title: 'Action',
@@ -108,7 +111,10 @@ function Dashboard1({ setSelectedLoan, userType }) {
   ];
 
   const handleTrack = (loan) => {
+    debugger;
+    console.log('loan',loan)
     setSelectedLoan(loan);
+    sessionStorage.setItem("ein",loan['ein'])
     navigate('/viewdetails');
   };
 

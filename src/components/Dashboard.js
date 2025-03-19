@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   Card,
   Row,
@@ -33,6 +33,7 @@ import {
 import { useSnackbar } from "notistack";
 import { LogoutOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
+import { updateLoanStackingDetails } from '../service/service';
 
 import crediblyLogo from "../assets/image/credibly.svg";
 import uwonLogo from "../assets/image/uwon.svg";
@@ -42,6 +43,7 @@ const { Title } = Typography;
 const { Sider, Content } = Layout;
 
 function Dashboard({ selectedLoan, userType }) {
+  console.log("selectedLoan",selectedLoan);
   const [verifyEINModal, setVerifyEINModal] = useState(false);
   const [responseModal, setResponseModal] = useState(false);
   const [closeConfirmModal, setCloseConfirmModal] = useState(false);
@@ -53,6 +55,15 @@ function Dashboard({ selectedLoan, userType }) {
   const [successModal, setSuccessModal] = useState(false);
   const navigate = useNavigate();
   const [verificationStatus, setVerificationStatus] = useState('pending');
+  const ein = sessionStorage.getItem("ein");
+  const originatorName = sessionStorage.getItem("originatorName");
+
+  useEffect(() => {
+    form.setFieldsValue({
+      ein: ein,
+      originatorName: originatorName
+    });
+  }, [form, ein, originatorName]);
 
   const sampleResponses = [
     {
@@ -131,23 +142,49 @@ function Dashboard({ selectedLoan, userType }) {
   ];
 
   const handleSubmitEIN = async (values) => {
-    // Check if the entered EIN matches one of the first two sample responses
-    const matchingResponse = sampleResponses.find(
-      (resp) => resp.ein === values.ein && !resp.error
-    );
+    console.log("values",values);
+    try {
+      // Call the API with the form values
+      await updateLoanStackingDetails({
+        LoanID: selectedLoan.id,
+      });
 
-    if (matchingResponse) {
-      setResponseData(matchingResponse);
-      setResponseModal(true);
-      setVerificationStatus('verified');
-      message.success("EIN verification submitted successfully");
-    } else {
-      setErrorMessage("No loans were found for this Borrower");
-      setErrorModal(true);
+      // Check for specific EIN that should show error
+      if (selectedLoan.id === "20000000015") {
+        debugger
+        setErrorMessage("No loans were found for this Borrower");
+        setErrorModal(true);
+        setVerifyEINModal(false);
+        return;
+      }
+
+      // Use the EIN from sessionStorage for comparison
+      const storedEIN = sessionStorage.getItem("ein");
+      
+      // Create dynamic response based on stored EIN
+      const matchingResponse = {
+        ein: storedEIN,
+        lender: "UOWN",
+        outstandingBalance: "$50,000",
+        state: "Yes, Self-Verified",
+        date: new Date().toISOString().split('T')[0]
+      };
+
+      if (values.ein === storedEIN) {
+        setResponseData(matchingResponse);
+        setResponseModal(true);
+        setVerificationStatus('verified');
+        message.success("EIN verification submitted successfully");
+      } else {
+        setErrorMessage("No loans were found for this Borrower");
+        setErrorModal(true);
+      }
+
+      setVerifyEINModal(false);
+    } catch (error) {
+      message.error("Failed to update loan stacking details");
+      console.error(error);
     }
-
-    form.resetFields();
-    setVerifyEINModal(false);
   };
 
   const getStatusBadge = (status) => {
@@ -225,7 +262,7 @@ function Dashboard({ selectedLoan, userType }) {
               level={2}
               style={{ textAlign: "center", margin: "20px 0" }}
             >
-              Loan Origination System
+              Loan Application Process ( Loan ID : {selectedLoan.id })
             </Typography.Title>
 
             <Row gutter={[16, 16]} justify="center">
@@ -334,7 +371,7 @@ function Dashboard({ selectedLoan, userType }) {
                         Outstanding Balance: {responseData.outstandingBalance}
                       </Typography.Text>
                       <Typography.Text strong>
-                        Status: {responseData.status}
+                        State: {responseData.state}
                       </Typography.Text>
                       <Typography.Text strong>
                         Date: {responseData.date}
