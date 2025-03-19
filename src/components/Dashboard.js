@@ -57,10 +57,14 @@ function Dashboard({ selectedLoan, userType }) {
   const [verificationStatus, setVerificationStatus] = useState('pending');
   const ein = sessionStorage.getItem("ein");
   const originatorName = sessionStorage.getItem("originatorName");
+  const borrower = sessionStorage.getItem("borrower");
+
+  console.log("borrower",borrower);
 
   useEffect(() => {
     form.setFieldsValue({
       ein: ein,
+      borrower : borrower,
       originatorName: originatorName
     });
   }, [form, ein, originatorName]);
@@ -315,16 +319,26 @@ function Dashboard({ selectedLoan, userType }) {
                 <Form.Item
                   name="ein"
                   label="EIN"
-                  rules={[{ required: true, message: "Please input EIN!" }]}
+                  rules={[{  message: "Please input EIN!" }]}
                 >
                   <Input placeholder="XX-XXXXXXX" />
+                </Form.Item>
+                <Form.Item
+                  name="borrower"
+                  label="Name of Borrower"
+                  rules={[
+                    {
+                      message: "Please input borrower name!",
+                    },
+                  ]}
+                >
+                  <Input placeholder="Enter borrower name" />
                 </Form.Item>
                 <Form.Item
                   name="originatorName"
                   label="Name of Originator"
                   rules={[
                     {
-                      required: true,
                       message: "Please input originator name!",
                     },
                   ]}

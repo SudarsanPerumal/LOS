@@ -43,8 +43,9 @@ function Dashboard1({ setSelectedLoan, userType }) {
     // interestRate: (parseFloat(loan['Current Interest Rate']) * 100).toFixed(2) + '%',
 
     interestRate: loan['Current Interest Rate'] + '%',
-    status: loan['Loan Status'],
-    ein : loan["EIN"]
+    verificationStatus: loan['Contract Digitized'],
+    ein : loan["EIN"],
+    borrower: loan["Borrower"]
   }));
 
   const getStatusColor = (status) => {
@@ -84,9 +85,9 @@ function Dashboard1({ setSelectedLoan, userType }) {
       key: 'interestRate'
     },
     {
-      title: 'Status',
-      dataIndex: 'status',
-      key: 'status',
+      title: 'Verification Status',
+      dataIndex: 'verificationStatus',
+      key: 'verificationStatus',
       // render: (status) => (
       //   <Tag color={getStatusColor(status)}>
       //     {status}
@@ -115,6 +116,7 @@ function Dashboard1({ setSelectedLoan, userType }) {
     console.log('loan',loan)
     setSelectedLoan(loan);
     sessionStorage.setItem("ein",loan['ein'])
+    sessionStorage.setItem("borrower",loan['borrower'])
     navigate('/viewdetails');
   };
 
