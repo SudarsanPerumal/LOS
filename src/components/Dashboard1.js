@@ -43,7 +43,7 @@ function Dashboard1({ setSelectedLoan, userType }) {
     // interestRate: (parseFloat(loan['Current Interest Rate']) * 100).toFixed(2) + '%',
 
     interestRate: loan['Current Interest Rate'] + '%',
-    verificationStatus: loan['Contract Digitized'],
+    Status: loan['Loan Status'],
     ein : loan["EIN"],
     borrower: loan["Borrower"]
   }));
@@ -85,9 +85,9 @@ function Dashboard1({ setSelectedLoan, userType }) {
       key: 'interestRate'
     },
     {
-      title: 'Verification Status',
-      dataIndex: 'verificationStatus',
-      key: 'verificationStatus',
+      title: 'Status',
+      dataIndex: 'Status',
+      key: 'Status',
       // render: (status) => (
       //   <Tag color={getStatusColor(status)}>
       //     {status}
