@@ -40,9 +40,9 @@ function Dashboard1({ setSelectedLoan, userType }) {
     id: loan['Loan ID'],
     assetClass: loan['Asset Class'],
     originalBalance: loan['Original Principal Balance'],
-    interestRate: (parseFloat(loan['Current Interest Rate']) * 100).toFixed(2) + '%',
+    // interestRate: (parseFloat(loan['Current Interest Rate']) * 100).toFixed(2) + '%',
 
-    // interestRate: loan['Current Interest Rate'] + '%',
+    interestRate: loan['Current Interest Rate'] + '%',
     status: loan['Loan Status'],
     ein : loan["EIN"]
   }));

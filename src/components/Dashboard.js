@@ -150,7 +150,7 @@ function Dashboard({ selectedLoan, userType }) {
       });
 
       // Check for specific EIN that should show error
-      if (selectedLoan.id === "20000000015") {
+      if (selectedLoan.id === "200000015") {
         debugger
         setErrorMessage("No loans were found for this Borrower");
         setErrorModal(true);
@@ -166,7 +166,7 @@ function Dashboard({ selectedLoan, userType }) {
         ein: storedEIN,
         lender: "UOWN",
         outstandingBalance: "$50,000",
-        state: "Yes, Self-Verified",
+        state: "Yes, loans found for this borrower; Self-Verified",
         date: new Date().toISOString().split('T')[0]
       };
 
@@ -361,19 +361,20 @@ function Dashboard({ selectedLoan, userType }) {
                     </Typography.Text>
                   ) : (
                     <>
-                      <Typography.Text strong>
-                        EIN: {responseData.ein}
-                      </Typography.Text>
-                      <Typography.Text strong>
-                        Lender: {responseData.lender}
-                      </Typography.Text>
-                      <Typography.Text strong>
-                        Outstanding Balance: {responseData.outstandingBalance}
-                      </Typography.Text>
-                      <Typography.Text strong>
+                    <Typography.Text strong>
                         State: {responseData.state}
                       </Typography.Text>
-                      <Typography.Text strong>
+                      <Typography.Text >
+                        EIN: {responseData.ein}
+                      </Typography.Text>
+                      <Typography.Text >
+                        Lender: {responseData.lender}
+                      </Typography.Text>
+                      <Typography.Text >
+                        Outstanding Balance: {responseData.outstandingBalance}
+                      </Typography.Text>
+                      
+                      <Typography.Text >
                         Date: {responseData.date}
                       </Typography.Text>
                     </>
