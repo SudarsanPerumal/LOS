@@ -112,9 +112,9 @@ function Dashboard1({ setSelectedLoan, userType }) {
   ];
 
   const handleTrack = (loan) => {
-    debugger;
     console.log('loan',loan)
     setSelectedLoan(loan);
+    sessionStorage.setItem("selectedLoanID" , loan.id)
     sessionStorage.setItem("ein",loan['ein'])
     sessionStorage.setItem("borrower",loan['borrower'])
     navigate('/viewdetails');

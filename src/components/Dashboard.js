@@ -58,6 +58,8 @@ function Dashboard({ selectedLoan, userType }) {
   const ein = sessionStorage.getItem("ein");
   const originatorName = sessionStorage.getItem("originatorName");
   const borrower = sessionStorage.getItem("borrower");
+  const loanID = sessionStorage.getItem("selectedLoanID")
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   console.log("borrower",borrower);
 
@@ -146,26 +148,24 @@ function Dashboard({ selectedLoan, userType }) {
   ];
 
   const handleSubmitEIN = async (values) => {
-    console.log("values",values);
+    setIsSubmitting(true);
+    
     try {
-      // Call the API with the form values
+      await new Promise(resolve => setTimeout(resolve, 2000));
+      
       await updateLoanStackingDetails({
         LoanID: selectedLoan.id,
       });
 
-      // Check for specific EIN that should show error
       if (selectedLoan.id === "200000015") {
-        debugger
         setErrorMessage("No loans were found for this Borrower");
         setErrorModal(true);
         setVerifyEINModal(false);
         return;
       }
 
-      // Use the EIN from sessionStorage for comparison
       const storedEIN = sessionStorage.getItem("ein");
       
-      // Create dynamic response based on stored EIN
       const matchingResponse = {
         ein: storedEIN,
         lender: "UOWN",
@@ -188,6 +188,8 @@ function Dashboard({ selectedLoan, userType }) {
     } catch (error) {
       message.error("Failed to update loan stacking details");
       console.error(error);
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -267,7 +269,7 @@ function Dashboard({ selectedLoan, userType }) {
               level={2}
               style={{ textAlign: "center", margin: "20px 0" }}
             >
-              Loan Application Process ( Loan ID : {selectedLoan.id })
+              Loan Application Process ( Loan ID : {loanID })
             </Typography.Title>
 
             <Row gutter={[16, 16]} justify="center">
@@ -347,7 +349,12 @@ function Dashboard({ selectedLoan, userType }) {
                   <Input placeholder="Enter originator name" />
                 </Form.Item>
                 <Form.Item>
-                  <Button type="primary" htmlType="submit" block>
+                  <Button 
+                    type="primary" 
+                    htmlType="submit" 
+                    block
+                    loading={isSubmitting}
+                  >
                     Submit
                   </Button>
                 </Form.Item>
@@ -422,7 +429,6 @@ function Dashboard({ selectedLoan, userType }) {
             </Modal>
 
             <Modal
-              // title="Error"
               style={{ marginTop: "110px" }}
               open={errorModal}
               onCancel={() => setErrorModal(false)}
