@@ -4,22 +4,30 @@ import { SnackbarProvider, useSnackbar } from 'notistack';
 import SignIn from './components/SignIn';
 import Dashboard from './components/Dashboard';
 import Dashboard1 from './components/Dashboard1';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { ConfigProvider, theme } from 'antd';
 
 function App() {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(() => {
+    return sessionStorage.getItem('isAuthenticated') === 'true';
+  });
   const [selectedLoan, setSelectedLoan] = useState(null);
-  const [userType, setUserType] = useState(null);
+  const [userType, setUserType] = useState(() => {
+    return sessionStorage.getItem('userType');
+  });
   const { enqueueSnackbar } = useSnackbar();
 
   const handleLogin = (credentials) => {
     if (credentials.username === "credibly" && credentials.password === "intain123") {
       sessionStorage.setItem('originatorName', credentials.username);
+      sessionStorage.setItem('isAuthenticated', 'true');
+      sessionStorage.setItem('userType', 'credibly');
       setIsAuthenticated(true);
       setUserType('credibly');
       return true;
     } else if (credentials.username === "uown" && credentials.password === "intain123") {
+      sessionStorage.setItem('isAuthenticated', 'true');
+      sessionStorage.setItem('userType', 'uwon');
       setIsAuthenticated(true);
       setUserType('uwon');
       return true;
