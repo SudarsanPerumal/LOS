@@ -238,6 +238,7 @@ function Dashboard({ selectedLoan, userType }) {
           defaultSelectedKeys={["dashboard"]}
           style={{ flex: 1, borderRight: 0 }}
           items={menuItems}
+          onClick={() => navigate("/dashboard")}
         />
 
         <div
