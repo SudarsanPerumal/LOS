@@ -45,7 +45,8 @@ function Dashboard1({ setSelectedLoan, userType }) {
     interestRate: loan['Current Interest Rate'] + '%',
     Status: loan['Loan Status'],
     ein : loan["EIN"],
-    borrower: loan["Borrower"]
+    borrower: loan["Borrower"],
+    contractDigitized : loan["Contract Digitized"]
   }));
 
   const getStatusColor = (status) => {
@@ -117,6 +118,7 @@ function Dashboard1({ setSelectedLoan, userType }) {
     sessionStorage.setItem("selectedLoanID" , loan.id)
     sessionStorage.setItem("ein",loan['ein'])
     sessionStorage.setItem("borrower",loan['borrower'])
+    sessionStorage.setItem("contractDigitized",loan['contractDigitized'])
     navigate('/viewdetails');
   };
 

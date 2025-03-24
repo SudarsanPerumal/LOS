@@ -61,6 +61,8 @@ function Dashboard({ selectedLoan, userType }) {
   const loanID = sessionStorage.getItem("selectedLoanID")
   const [isSubmitting, setIsSubmitting] = useState(false);
 
+  const contractDigitized = sessionStorage.getItem("contractDigitized");
+
   console.log("borrower",borrower);
 
   useEffect(() => {
@@ -170,7 +172,7 @@ function Dashboard({ selectedLoan, userType }) {
         ein: storedEIN,
         lender: "UOWN",
         outstandingBalance: "$50,000",
-        state: "Yes, loans found for this borrower; Self-Verified",
+        state: contractDigitized === "No" ? "Yes, loans found for this borrower; Unverified" : `Yes, loans found for this borrower; ${contractDigitized}`,
         date: new Date().toISOString().split('T')[0]
       };
 
