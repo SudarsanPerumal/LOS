@@ -341,7 +341,7 @@ function Dashboard({ selectedLoan, userType }) {
                 </Form.Item>
                 <Form.Item
                   name="originatorName"
-                  label="Name of Originator"
+                  label="Name of Broker"
                   rules={[
                     {
                       message: "Please input originator name!",
@@ -394,9 +394,9 @@ function Dashboard({ selectedLoan, userType }) {
                       <Typography.Text >
                         Lender: {responseData.lender}
                       </Typography.Text>
-                      <Typography.Text >
+                      {/* <Typography.Text >
                         Outstanding Balance: {responseData.outstandingBalance}
-                      </Typography.Text>
+                      </Typography.Text> */}
                       
                       <Typography.Text >
                         Date: {responseData.date}
