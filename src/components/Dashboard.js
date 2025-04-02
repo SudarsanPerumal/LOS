@@ -172,7 +172,7 @@ function Dashboard({ selectedLoan, userType }) {
         ein: storedEIN,
         lender: "UOWN",
         outstandingBalance: "$50,000",
-        state: contractDigitized === "No" ? "Yes, loans found for this borrower; Unverified" : `Yes, loans found for this borrower; ${contractDigitized}`,
+        state: contractDigitized === "No" ? "Yes, loans found for this broker; Unverified" : `Yes, loans found for this broker; ${contractDigitized}`,
         date: new Date().toISOString().split('T')[0]
       };
 
@@ -341,7 +341,7 @@ function Dashboard({ selectedLoan, userType }) {
                 </Form.Item>
                 <Form.Item
                   name="originatorName"
-                  label="Name of Broker"
+                  label="Name of Lender"
                   rules={[
                     {
                       message: "Please input originator name!",
