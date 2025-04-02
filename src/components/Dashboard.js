@@ -172,7 +172,7 @@ function Dashboard({ selectedLoan, userType }) {
         ein: storedEIN,
         lender: "UOWN",
         outstandingBalance: "$50,000",
-        state: contractDigitized === "No" ? "Yes, loans found for this broker; Unverified" : `Yes, loans found for this broker; ${contractDigitized}`,
+        state: contractDigitized === "No" ? "Yes, loans found for this borrower; Unverified" : `Yes, loans found for this borrower; ${contractDigitized}`,
         date: new Date().toISOString().split('T')[0]
       };
 
@@ -392,7 +392,7 @@ function Dashboard({ selectedLoan, userType }) {
                         EIN: {responseData.ein}
                       </Typography.Text>
                       <Typography.Text >
-                        Lender: {responseData.lender}
+                        Broker: {responseData.lender}
                       </Typography.Text>
                       {/* <Typography.Text >
                         Outstanding Balance: {responseData.outstandingBalance}
